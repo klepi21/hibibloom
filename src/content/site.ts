@@ -126,6 +126,12 @@ export const benefits = {
   ],
 } as const
 
+export const bloom = {
+  kicker: "Η ιστορία μας σε μία εικόνα",
+  line: "Κάθε μάθημα, ένα πέταλο ακόμα.",
+  aria: "Ένας ιβίσκος ανθίζει καθώς κυλάτε τη σελίδα",
+} as const
+
 export const programs = {
   id: "programmata",
   kicker: "03 · Προγράμματα",

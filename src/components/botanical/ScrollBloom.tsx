@@ -36,6 +36,10 @@ export function ScrollBloom({
     const el = root.current
     if (!el || prefersReducedMotion()) return
 
+    // Ένα trigger ανά λουλούδι: πέταλα και περιστροφή μοιράζονται το ίδιο
+    // scrubbed timeline. Ξεχωριστά triggers στο ίδιο στοιχείο, μαζί με το
+    // pinned section της σελίδας, προκαλούσαν κατάρρευση στο refresh του
+    // ScrollTrigger κατά το mount.
     const ctx = gsap.context(() => {
       gsap.set(".hb-petal", { scale: 0.12, opacity: 0, svgOrigin: "150 185" })
       gsap.set(".hb-stamen, .hb-anthers, .hb-throat", { opacity: 0 })
@@ -54,12 +58,7 @@ export function ScrollBloom({
         .to(".hb-throat", { opacity: 1, duration: 0.4 }, 0.45)
         .to(".hb-stamen", { opacity: 1, duration: 0.5 }, 0.55)
         .to(".hb-anthers", { opacity: 1, duration: 0.4 }, 0.75)
-
-      gsap.to(el, {
-        rotation: rotate,
-        ease: "none",
-        scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: 1.4 },
-      })
+        .to(el, { rotation: rotate, ease: "none", duration: 1 }, 0)
     }, el)
 
     return () => ctx.revert()

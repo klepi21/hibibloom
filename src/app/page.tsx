@@ -5,6 +5,7 @@ import { Nav } from "@/components/Nav"
 import { Hero } from "@/components/sections/Hero"
 import { Why } from "@/components/sections/Why"
 import { Benefits } from "@/components/sections/Benefits"
+import { BloomSequence } from "@/components/sections/BloomSequence"
 import { Programs } from "@/components/sections/Programs"
 import { HomeLessons } from "@/components/sections/HomeLessons"
 import { Instructor } from "@/components/sections/Instructor"
@@ -40,6 +41,7 @@ export default function Home() {
         <Hero />
         <Why />
         <Benefits />
+        <BloomSequence />
         <Programs />
         <HomeLessons />
         <Instructor />
