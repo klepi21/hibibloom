@@ -49,7 +49,7 @@ export function Footer() {
               Επικοινωνία
             </h2>
             <address className="space-y-2 text-[0.92rem] not-italic text-cream/65">
-              <p>{contact.details.address}</p>
+              <p>{contact.details.areas}</p>
               <p>
                 <a href={`tel:${contact.details.phone.replace(/\s/g, "")}`} className="transition-colors hover:text-melon">
                   {contact.details.phone}

@@ -34,7 +34,7 @@ const handwriting = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — Yoga για παιδιά & εφήβους`,
+    default: `${site.name} · Yoga για παιδιά & εφήβους`,
     template: `%s · ${site.name}`,
   },
   description: site.description,
@@ -54,12 +54,12 @@ export const metadata: Metadata = {
     locale: site.locale,
     url: site.url,
     siteName: site.name,
-    title: `${site.name} — Κάθε παιδί αξίζει να ανθίσει`,
+    title: `${site.name} · Κάθε παιδί αξίζει να ανθίσει`,
     description: site.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — Κάθε παιδί αξίζει να ανθίσει`,
+    title: `${site.name} · Κάθε παιδί αξίζει να ανθίσει`,
     description: site.description,
   },
   robots: { index: true, follow: true },
@@ -76,19 +76,19 @@ export const viewport: Viewport = {
   initialScale: 1,
 }
 
-/** Rich result for a local business — helps the studio surface in search. */
+/**
+ * Rich result. Hibi Bloom has no premises: lessons happen at families' homes
+ * and in partner studios, so this is a mobile LocalBusiness with areaServed
+ * rather than a place with an address.
+ */
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "SportsActivityLocation",
+  "@type": "LocalBusiness",
   name: site.name,
   description: site.description,
   url: site.url,
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Αθήνα",
-    addressCountry: "GR",
-  },
-  areaServed: "Αθήνα",
+  founder: { "@type": "Person", name: "Ρεγγίνα Αυγουστή" },
+  areaServed: { "@type": "City", name: "Αθήνα" },
   knowsLanguage: ["el", "en"],
 }
 

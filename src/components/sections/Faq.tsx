@@ -3,6 +3,8 @@
 import { useRef, useState } from "react"
 import { SectionHeading } from "@/components/ui/SectionHeading"
 import { Leaf } from "@/components/botanical/Flora"
+import { ScrollBloom } from "@/components/botanical/ScrollBloom"
+import { KidFloat } from "@/components/botanical/KidFloat"
 import { faq } from "@/content/site"
 
 /**
@@ -25,11 +27,22 @@ export function Faq() {
       <div className="wash-bloom pointer-events-none absolute inset-0 -z-20 opacity-30" />
 
       <div className="mx-auto grid max-w-[1180px] gap-14 px-5 sm:px-8 lg:grid-cols-12">
-        <div className="lg:col-span-4">
+        <div className="relative lg:col-span-4">
           <SectionHeading kicker={faq.kicker} title={faq.title} />
           <div className="pointer-events-none mt-10 hidden w-32 opacity-40 lg:block">
             <Leaf seed={1201} tone="leaf" className="h-auto w-full" />
           </div>
+          <ScrollBloom
+            seed={3130}
+            idPrefix="faqbloom"
+            rotate={8}
+            className="top-40 -left-16 -z-10 hidden w-44 opacity-[0.14] lg:block"
+          />
+          <KidFloat
+            pose="dog"
+            drift={30}
+            className="bottom-4 left-2 hidden w-36 opacity-90 lg:block"
+          />
         </div>
 
         <div className="lg:col-span-8">

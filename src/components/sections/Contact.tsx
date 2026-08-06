@@ -166,6 +166,12 @@ export function Contact() {
                 />
                 <Field id="child" name="child" label={contact.form.child} />
 
+                {/* Χωρίς δικό μας χώρο, η περιοχή είναι το πρώτο πράγμα που
+                    χρειαζόμαστε για να απαντήσουμε αν καλύπτεται κατ' οίκον. */}
+                <div className="sm:col-span-2">
+                  <Field id="area" name="area" label={contact.form.area} />
+                </div>
+
                 <div className="sm:col-span-2">
                   <Field
                     id="message"
@@ -198,7 +204,7 @@ export function Contact() {
           <div className="lg:col-span-5">
             <dl className="space-y-7">
               {[
-                [contact.details.addressLabel, contact.details.address],
+                [contact.details.areasLabel, contact.details.areas],
                 [contact.details.phoneLabel, contact.details.phone],
                 [contact.details.emailLabel, contact.details.email],
                 [contact.details.hoursLabel, contact.details.hours],
@@ -225,12 +231,8 @@ export function Contact() {
               ))}
             </ul>
 
-            {/* Map placeholder — swap for an embed once the address is final. */}
-            <div className="glass-dark radius-soft mt-9 grid aspect-[4/3] place-items-center overflow-hidden text-center">
-              <p className="max-w-[24ch] px-6 text-[0.85rem] leading-relaxed text-cream/45">
-                {contact.mapLabel}
-              </p>
-            </div>
+            {/* Χωρίς φυσικό χώρο δεν υπάρχει χάρτης: τα μαθήματα γίνονται
+                κατ' οίκον και σε συνεργαζόμενους χώρους. */}
           </div>
         </div>
       </div>

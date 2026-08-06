@@ -19,31 +19,31 @@ npm run lint
 
 | Τι | Πού | Σημείωση |
 |---|---|---|
-| Διεύθυνση, τηλέφωνο, email, ώρες | `contact.details` | Εντελώς εικονικά |
+| Τηλέφωνο, email, ώρες, περιοχές | `contact.details` | Εντελώς εικονικά |
 | Σύνδεσμοι social | `contact.social` | Δείχνουν σε `#` |
-| Ονόματα & βιογραφικά ομάδας | `instructors.people` | **Φανταστικά πρόσωπα** |
+| Βιογραφικό & πιστοποιήσεις Ρεγγίνας | `instructor` | Το όνομα είναι πραγματικό, τα υπόλοιπα ενδεικτικά |
+| Φωτογραφία Ρεγγίνας | `sections/Instructor.tsx` | Βοτανικό μοτίβο μέχρι να μπει |
 | Μαρτυρίες γονέων | `testimonials.items` | **Δεν είναι πραγματικές κριτικές** |
+| Περιοχές εξυπηρέτησης | `faq`, `contact.details` | Επιβεβαιώστε τις πραγματικές |
 | Domain / canonical URL | `site.url` | `https://hibibloom.gr` |
-| Χάρτης | `sections/Contact.tsx` | Placeholder αντί για embed |
-| Αποστολή φόρμας | `sections/Contact.tsx` | Δεν υπάρχει backend — βλ. παρακάτω |
-| Φωτογραφίες χώρου | `public/images/space-*.webp` | Παραγμένες με AI |
+| Αποστολή φόρμας | `sections/Contact.tsx` | Δεν υπάρχει backend, βλ. παρακάτω |
 
-### Οι μαρτυρίες και η ομάδα
+Το Hibi Bloom **δεν έχει δικό του χώρο**: η Ρεγγίνα Αυγουστή κάνει μαθήματα
+κατ' οίκον και σε συνεργαζόμενους χώρους. Γι' αυτό δεν υπάρχει section χώρου,
+χάρτης ή διεύθυνση, και το JSON-LD δηλώνει κινητή υπηρεσία με `areaServed`.
+
+### Οι μαρτυρίες
 
 Οι μαρτυρίες είναι δείγματα κειμένου για να φανεί η σχεδίαση. **Η δημοσίευσή
 τους ως πραγματικές κριτικές γονέων θα ήταν παραπλανητική.** Αντικαταστήστε τες
-με αληθινά, επώνυμα σχόλια — ή αφαιρέστε το section.
+με αληθινά, επώνυμα σχόλια, ή αφαιρέστε το section.
 
-Το ίδιο ισχύει για την ομάδα: τα πρόσωπα είναι φανταστικά. Οι κάρτες **δεν**
-περιέχουν φωτογραφίες ανθρώπων — δείχνουν ένα βοτανικό μοτίβο μέχρι να μπουν
-πραγματικά πορτρέτα.
+### Εικονογραφήσεις
 
-### Φωτογραφίες
-
-Οι πέντε φωτογραφίες του χώρου και το macro του ιβίσκου δημιουργήθηκαν με AI
-(Higgsfield · `nano_banana_pro`) ως **προσωρινή διεύθυνση τέχνης**. Δεν
-απεικονίζουν τον πραγματικό χώρο και **δεν περιέχουν παιδιά**, σκόπιμα.
-Αντικαταστήστε τες με πραγματική φωτογράφιση πριν τη δημοσίευση.
+Οι εικονογραφήσεις (παιδάκια σε στάσεις yoga, σκηνή κατ' οίκον, σκηνή
+συνεργαζόμενου χώρου) δημιουργήθηκαν με AI (Higgsfield · `nano_banana_pro`
+και `image_background_remover`) σε flat ύφος με την παλέτα του brand. Είναι
+εικονογράφηση, όχι φωτογραφίες πραγματικών προσώπων.
 
 Επεξεργασία νέων εικόνων σε βελτιστοποιημένα webp:
 
@@ -106,8 +106,8 @@ src/
   app/            layout (fonts, metadata, JSON-LD), globals.css, icon, opengraph-image
   content/site.ts ΟΛΟ το κείμενο — εδώ γίνονται οι αλλαγές περιεχομένου
   components/
-    botanical/    Hibiscus, Flora (φύλλα/κληματίδες), Creatures, Flight, Pollen
-    sections/     Hero, Why, Benefits, Programs, Space, Instructors,
+    botanical/    Hibiscus, Flora, Creatures, Flight, Pollen, ScrollBloom, KidFloat
+    sections/     Hero, Why, Benefits, Programs, HomeLessons, Instructor,
                   Testimonials, Faq, Contact, Footer
     ui/           MagneticButton, Reveal, SectionHeading, Grain
     Nav, Preloader, SmoothScroll
@@ -122,6 +122,8 @@ src/
   ώστε server και client να παράγουν ίδιο markup (hydration).
 - `prefers-reduced-motion` τηρείται παντού: το intro παρακάμπτεται, τα particles
   δεν ξεκινούν, τα reveals μένουν ορατά.
+- Τα `ScrollBloom` λουλούδια στα φωτεινά sections ανοίγουν scrubbed στο scroll,
+  ώστε η σελίδα να «ανθίζει» όσο κατεβαίνει ο επισκέπτης.
 - Το intro παίζει μία φορά ανά session (`sessionStorage`) και κλείνει με `Escape`.
   Σε development, `?holdintro=2.4` παγώνει το άνθισμα για επιθεώρηση.
 

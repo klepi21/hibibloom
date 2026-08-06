@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react"
 import { gsap, prefersReducedMotion } from "@/lib/gsap"
 import { Reveal } from "@/components/ui/Reveal"
 import { Vine, Sprout } from "@/components/botanical/Flora"
+import { ScrollBloom } from "@/components/botanical/ScrollBloom"
+import { KidFloat } from "@/components/botanical/KidFloat"
 import { SectionHeading } from "@/components/ui/SectionHeading"
 import { why } from "@/content/site"
 
@@ -69,6 +71,19 @@ export function Why() {
       <div className="pointer-events-none absolute top-16 -left-20 -z-10 hidden h-[74%] w-[150px] opacity-40 xl:block">
         <Vine seed={8} leaves={6} className="h-full w-full" />
       </div>
+
+      {/* Λουλούδι που ανοίγει με το scroll + ένα παιδάκι σε δέντρο. */}
+      <ScrollBloom
+        seed={1810}
+        idPrefix="whybloom"
+        rotate={14}
+        className="-right-20 top-24 -z-10 w-56 opacity-20 sm:w-72"
+      />
+      <KidFloat
+        pose="tree"
+        drift={-46}
+        className="right-[3%] bottom-[7%] -z-10 hidden w-24 opacity-90 lg:block xl:w-28"
+      />
 
       <div className="mx-auto max-w-[1180px] px-5 sm:px-8">
         <SectionHeading kicker={why.kicker} title={why.title} />

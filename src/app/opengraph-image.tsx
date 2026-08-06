@@ -10,7 +10,7 @@ import path from "node:path"
  * ground, with the headline set in Comfortaa — the only brand face with Greek.
  */
 
-export const alt = "Hibi Bloom — Κάθε παιδί αξίζει να ανθίσει"
+export const alt = "Hibi Bloom · Κάθε παιδί αξίζει να ανθίσει"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 

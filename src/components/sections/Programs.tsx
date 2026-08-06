@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react"
 import { gsap, prefersReducedMotion } from "@/lib/gsap"
 import { Hibiscus } from "@/components/botanical/Hibiscus"
 import { Leaf } from "@/components/botanical/Flora"
+import { ScrollBloom } from "@/components/botanical/ScrollBloom"
+import { KidFloat } from "@/components/botanical/KidFloat"
 import { SectionHeading } from "@/components/ui/SectionHeading"
 import { MagneticButton } from "@/components/ui/MagneticButton"
 import { programs } from "@/content/site"
@@ -92,6 +94,24 @@ export function Programs() {
       className="relative isolate overflow-hidden bg-cream-warm py-28 sm:py-36"
     >
       <div className="wash-bloom pointer-events-none absolute inset-0 -z-20 opacity-40" />
+
+      {/* Το λουλούδι ανοίγει καθώς φτάνει το section, τα παιδάκια πλαισιώνουν. */}
+      <ScrollBloom
+        seed={2650}
+        idPrefix="pgbloom"
+        rotate={-10}
+        className="top-16 -left-24 -z-10 w-60 opacity-[0.18] sm:w-80"
+      />
+      <KidFloat
+        pose="lotus"
+        drift={40}
+        className="left-[2%] bottom-[4%] -z-10 hidden w-24 opacity-90 lg:block"
+      />
+      <KidFloat
+        pose="warrior"
+        drift={-52}
+        className="right-[2%] top-[16%] -z-10 hidden w-28 opacity-90 lg:block"
+      />
 
       <div className="mx-auto max-w-[1240px] px-5 sm:px-8">
         <SectionHeading kicker={programs.kicker} title={programs.title} lead={programs.lead} />
