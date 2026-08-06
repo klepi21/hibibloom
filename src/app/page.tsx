@@ -19,7 +19,7 @@ import { Footer } from "@/components/sections/Footer"
  *   01 a hibiscus blooms             → Hero
  *   02 children discover movement    → Why
  *   03 movement creates confidence   → Benefits
- *   04 confidence creates connection → Programs
+ *   04 confidence creates connection → Programs, sealed by the bloom timelapse
  *   05 the yoga comes to the child   → HomeLessons / Instructor / Testimonials
  *   06 the whole garden blooms       → Contact
  *
@@ -41,8 +41,8 @@ export default function Home() {
         <Hero />
         <Why />
         <Benefits />
-        <BloomSequence />
         <Programs />
+        <BloomSequence />
         <HomeLessons />
         <Instructor />
         <Testimonials />

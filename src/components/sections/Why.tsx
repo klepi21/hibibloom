@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react"
 import { gsap, prefersReducedMotion } from "@/lib/gsap"
 import { Reveal } from "@/components/ui/Reveal"
-import { Vine, Sprout } from "@/components/botanical/Flora"
+import { Vine } from "@/components/botanical/Flora"
 import { ScrollBloom } from "@/components/botanical/ScrollBloom"
 import { KidFloat } from "@/components/botanical/KidFloat"
 import { SectionHeading } from "@/components/ui/SectionHeading"
@@ -40,20 +40,6 @@ export function Why() {
         stagger: 0.4,
         scrollTrigger: { trigger: el, start: "top 70%", end: "bottom 75%", scrub: 1.2 },
       })
-
-      // Pillars rise in a soft stagger.
-      gsap.fromTo(
-        ".pillar",
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.95,
-          ease: "power3.out",
-          stagger: { each: 0.08, grid: "auto", from: "start" },
-          scrollTrigger: { trigger: ".pillar-grid", start: "top 82%", once: true },
-        }
-      )
     }, el)
 
     return () => ctx.revert()
@@ -97,28 +83,6 @@ export function Why() {
           <Reveal className="md:col-span-4" delay={0.15}>
             <p className="text-[1.02rem] leading-[1.85] text-forest/70">{why.body}</p>
           </Reveal>
-        </div>
-
-        <div className="pillar-grid mt-20 grid gap-x-8 gap-y-11 sm:grid-cols-2 lg:grid-cols-4">
-          {why.pillars.map((p, i) => (
-            <div key={p.title} className="pillar group relative">
-              <span
-                aria-hidden="true"
-                className="mb-4 block text-[0.68rem] tracking-[0.22em] text-magenta/45 tabular-nums"
-              >
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div className="mb-3 flex items-center gap-2.5">
-                <Sprout
-                  className="h-5 w-5 shrink-0 text-leaf-500 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:rotate-[8deg] group-hover:scale-110"
-                  tone={p.title}
-                />
-                <h3 className="text-[1.06rem] font-medium text-forest">{p.title}</h3>
-              </div>
-              <p className="text-[0.94rem] leading-[1.75] text-forest/62">{p.text}</p>
-              <span className="mt-5 block h-px w-full origin-left scale-x-100 bg-forest/8 transition-colors duration-500 group-hover:bg-magenta/30" />
-            </div>
-          ))}
         </div>
       </div>
     </section>
