@@ -64,18 +64,37 @@ export function Preloader() {
 
     const el = root.current
     if (!el) return
+    // Ξεχωριστό const με ρητό τύπο: μέσα στη hoisted buildIntro ο TS χάνει το
+    // narrowing του el.
+    const scope: HTMLDivElement = el
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        tl.progress(1)
+        tl?.progress(1)
       }
     }
     window.addEventListener("keydown", onKey)
 
+    // Failsafe: αν για οποιονδήποτε λόγο το timeline δεν ολοκληρώσει (σφάλμα
+    // αλλού στη σελίδα, χαμένο tab focus με throttled rAF, σπασμένο HMR chunk),
+    // το overlay ΔΕΝ επιτρέπεται να μείνει: αυτοκαταργείται μετά από 8".
+    const failsafe = window.setTimeout(finish, 8000)
+
     // Selectors are scoped to the overlay by gsap.context, so the shared
     // `.hb-*` hooks inside <Hibiscus> only match this instance.
-    let tl!: gsap.core.Timeline
-    const ctx = gsap.context(() => {
+    // Δεύτερο failsafe: αν η ίδια η δημιουργία σκάσει, δεν μένουμε ποτέ με
+    // στημένο (κρυμμένο) περιεχόμενο κάτω από ζωντανό overlay.
+    let tl: gsap.core.Timeline | undefined
+    let ctx: gsap.Context
+    try {
+      ctx = buildIntro()
+    } catch {
+      finish()
+      return () => window.clearTimeout(failsafe)
+    }
+
+    function buildIntro() {
+      return gsap.context(() => {
       gsap.set(".hb-petal", { scale: 0, opacity: 0, svgOrigin: "150 185" })
       gsap.set(".hb-stamen", { scale: 0, opacity: 0, svgOrigin: "150 186" })
       gsap.set(".hb-throat, .hb-anthers", { opacity: 0 })
@@ -113,17 +132,19 @@ export function Preloader() {
         .to(".pl-logo, .pl-line", { opacity: 0, y: -18, duration: 0.6, ease: "power2.in" }, "<")
         .to(el, { clipPath: "inset(0% 0% 100% 0%)", duration: 0.95, ease: "power3.inOut" }, "<0.15")
 
-      // Dev aid: ?holdintro=<seconds> freezes the opening bloom for inspection.
-      // Development only — a visitor must never be able to stall the intro.
-      if (process.env.NODE_ENV !== "production") {
-        const hold = new URLSearchParams(location.search).get("holdintro")
-        if (hold !== null) tl.pause(Number(hold) || 1.35)
-      }
-    }, el)
+        // Dev aid: ?holdintro=<seconds> freezes the opening bloom for inspection.
+        // Development only — a visitor must never be able to stall the intro.
+        if (process.env.NODE_ENV !== "production") {
+          const hold = new URLSearchParams(location.search).get("holdintro")
+          if (hold !== null) tl!.pause(Number(hold) || 1.35)
+        }
+      }, scope)
+    }
 
     return () => {
+      window.clearTimeout(failsafe)
       window.removeEventListener("keydown", onKey)
-      tl.kill()
+      tl?.kill()
       ctx.revert()
       document.documentElement.classList.remove("intro-lock")
     }
