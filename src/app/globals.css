@@ -1,26 +1,322 @@
 @import "tailwindcss";
 
+/* =========================================================================
+   Hibi Bloom — design tokens
+   Colours are the three brand values from `logo identity.pdf`, verbatim:
+     Yellow Green  RGB 171,201,82   RAL 6018
+     Telemagenta   RGB 237,21,137   RAL 4010
+     Melon Yellow  RGB 255,179,16   RAL 1028
+   Everything else is a tint/shade derived from those three so the whole
+   palette stays inside the logo's world.
+   ========================================================================= */
+
+@theme {
+  /* --- brand primaries (exact) --- */
+  --color-leaf: #abc952;
+  --color-magenta: #ed1589;
+  --color-melon: #ffb310;
+
+  /* --- leaf ramp --- */
+  --color-leaf-50: #f6faec;
+  --color-leaf-100: #eaf4d3;
+  --color-leaf-200: #d7eaad;
+  --color-leaf-300: #c3df86;
+  --color-leaf-400: #abc952;
+  --color-leaf-500: #94b23c;
+  --color-leaf-600: #74902e;
+  --color-leaf-700: #556c24;
+  --color-leaf-800: #38491b;
+  --color-leaf-900: #1f2a11;
+
+  /* --- magenta ramp --- */
+  --color-magenta-50: #fdf0f7;
+  --color-magenta-100: #fcdcec;
+  --color-magenta-200: #f9b3d6;
+  --color-magenta-300: #f57ab8;
+  --color-magenta-400: #f14ba0;
+  --color-magenta-500: #ed1589;
+  --color-magenta-600: #c70f72;
+  --color-magenta-700: #9a0b58;
+  --color-magenta-800: #6b073d;
+  --color-magenta-900: #3d0423;
+
+  /* --- melon ramp --- */
+  --color-melon-50: #fff8e9;
+  --color-melon-100: #ffefcc;
+  --color-melon-200: #ffdf9a;
+  --color-melon-300: #ffcc5e;
+  --color-melon-400: #ffb310;
+  --color-melon-500: #e69c06;
+  --color-melon-600: #b87a05;
+  --color-melon-700: #8a5a06;
+  --color-melon-800: #5c3c05;
+  --color-melon-900: #2f1f03;
+
+  /* --- grounds --- */
+  --color-ink: #0d1108; /* off-black, warmed toward leaf */
+  --color-forest: #101a0d; /* deep forest green */
+  --color-forest-soft: #17250f;
+  --color-cream: #fbf8ef; /* soft cream */
+  --color-cream-warm: #f5efdf;
+
+  /* --- typography --- */
+  --font-sans: var(--font-comfortaa), ui-sans-serif, system-ui, sans-serif;
+  --font-script: var(--font-handwriting), var(--font-comfortaa), cursive;
+
+  /* --- easing: organic, never mechanical --- */
+  --ease-bloom: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-sway: cubic-bezier(0.37, 0, 0.63, 1);
+  --ease-petal: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* =========================================================================
+   Base
+   ========================================================================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --grain-opacity: 0.05;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  min-width: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: auto; /* Lenis owns scrolling */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-cream);
+  color: var(--color-forest);
+  font-family: var(--font-sans);
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+/* Greek display type: Comfortaa Light, tightened and given room to breathe. */
+.font-display {
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+/* Simple-Handwriting has NO Greek glyphs (99 glyphs, Latin only).
+   Reserved for the Latin wordmark and short Latin accents. */
+.font-wordmark {
+  font-family: var(--font-script);
+  font-weight: 400;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-magenta) 22%, transparent);
+  color: var(--color-forest);
+}
+
+/* =========================================================================
+   Focus — visible, on-brand, never suppressed
+   ========================================================================= */
+
+:focus-visible {
+  outline: 2px solid var(--color-magenta);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.on-dark :focus-visible {
+  outline-color: var(--color-melon);
+}
+
+/* =========================================================================
+   Lenis
+   ========================================================================= */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+/* =========================================================================
+   Texture — delicate grain as a fixed overlay
+   ========================================================================= */
+
+.grain-overlay {
+  position: fixed;
+  inset: -60%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: multiply;
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  will-change: transform;
+  animation: grain-shift 5s steps(5) infinite;
+}
+
+@keyframes grain-shift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  20% {
+    transform: translate3d(-1.5%, 1%, 0);
+  }
+  40% {
+    transform: translate3d(1%, -1.5%, 0);
+  }
+  60% {
+    transform: translate3d(-1%, -1%, 0);
+  }
+  80% {
+    transform: translate3d(1.5%, 1.5%, 0);
+  }
+}
+
+/* =========================================================================
+   Reusable organic bits
+   ========================================================================= */
+
+.wash-bloom {
+  background:
+    radial-gradient(
+      60% 50% at 18% 12%,
+      color-mix(in oklab, var(--color-magenta) 12%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      55% 45% at 88% 30%,
+      color-mix(in oklab, var(--color-melon) 14%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      70% 60% at 50% 100%,
+      color-mix(in oklab, var(--color-leaf) 16%, transparent),
+      transparent 72%
+    );
+}
+
+.wash-forest {
+  background:
+    radial-gradient(
+      50% 40% at 20% 10%,
+      color-mix(in oklab, var(--color-leaf) 18%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      60% 50% at 85% 80%,
+      color-mix(in oklab, var(--color-magenta) 16%, transparent),
+      transparent 70%
+    );
+}
+
+/* The settled navigation bar.
+   Deliberately near-opaque rather than true glass: the page alternates cream
+   and deep-forest sections, and a translucent bar turned into a muddy grey
+   band with unreadable dark text every time it crossed a dark section. */
+.nav-glass {
+  background: color-mix(in oklab, var(--color-cream) 88%, transparent);
+  backdrop-filter: blur(16px) saturate(1.25);
+  -webkit-backdrop-filter: blur(16px) saturate(1.25);
+  border-bottom: 1px solid color-mix(in oklab, var(--color-forest) 8%, transparent);
+}
+
+/* Glass, used sparingly. */
+.glass {
+  background: color-mix(in oklab, white 55%, transparent);
+  backdrop-filter: blur(14px) saturate(1.3);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  border: 1px solid color-mix(in oklab, white 65%, transparent);
+}
+
+.glass-dark {
+  background: color-mix(in oklab, var(--color-forest) 55%, transparent);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border: 1px solid color-mix(in oklab, var(--color-leaf) 22%, transparent);
+}
+
+/* Organic corner radii — no two corners alike. */
+.radius-petal {
+  border-radius: 62% 38% 46% 54% / 54% 46% 54% 46%;
+}
+.radius-leaf {
+  border-radius: 68% 32% 68% 32% / 32% 68% 32% 68%;
+}
+.radius-soft {
+  border-radius: 2rem 2.75rem 2.25rem 3rem;
+}
+
+/* Hero scroll cue. */
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  55%,
+  100% {
+    transform: translateY(300%);
+  }
+}
+
+/* While the intro plays, the page behind must not scroll. */
+html.intro-lock,
+html.intro-lock body {
+  overflow: clip;
+}
+
+/* Text reveal: each word gets its own mask so it can slide up from behind.
+   Must stay inline-block — `block` here would put every word on its own line.
+   The padding/margin pair gives Greek descenders and accents room inside the
+   mask without changing the text's position. */
+.reveal-line {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+/* Hides content until GSAP takes over, without hurting no-JS/SEO. */
+.js-ready [data-anim-hidden] {
+  opacity: 0;
+}
+
+/* =========================================================================
+   Motion preferences — honoured globally
+   ========================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .grain-overlay {
+    animation: none;
+  }
+  .js-ready [data-anim-hidden] {
+    opacity: 1;
+  }
+}
+
+.sr-only-focusable:not(:focus):not(:focus-within) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
