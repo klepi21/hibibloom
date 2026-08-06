@@ -144,8 +144,8 @@ export function BloomSequence() {
           <Image
             src={frameSrc(FRAME_COUNT - 1)}
             alt={bloom.aria}
-            width={1280}
-            height={720}
+            width={1920}
+            height={1080}
             className="h-auto w-full"
           />
           <p className="absolute inset-x-0 bottom-10 text-center font-display text-[clamp(1.4rem,3.5vw,2.4rem)] text-cream">

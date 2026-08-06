@@ -124,8 +124,8 @@ src/
   δεν ξεκινούν, τα reveals μένουν ορατά.
 - Τα `ScrollBloom` λουλούδια στα φωτεινά sections ανοίγουν scrubbed στο scroll,
   ώστε η σελίδα να «ανθίζει» όσο κατεβαίνει ο επισκέπτης.
-- `BloomSequence`: pinned κινηματογραφικό ιντερμέδιο μετά τα Οφέλη. 61 καρέ webp
-  (1.2MB) από timelapse ιβίσκου που παρήχθη με Higgsfield (nano_banana_pro για
+- `BloomSequence`: pinned κινηματογραφικό ιντερμέδιο μετά τα Οφέλη. 61 καρέ webp 1920px
+  (2.8MB, από 2k upscale με bytedance_video_upscale/aigc) από timelapse ιβίσκου που παρήχθη με Higgsfield (nano_banana_pro για
   τα ακραία καρέ, seedance_2_0_mini για την κίνηση), scrubbed σε canvas. Νέα
   καρέ: ξαναπαράγετε video, `ffmpeg -i bloom.mp4 -vf "select='not(mod(n,2))'"`
   και περάστε τα PNG από sharp σε webp q70.
