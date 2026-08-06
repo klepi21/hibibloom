@@ -95,7 +95,10 @@ const jsonLd = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="el" className={`${comfortaa.variable} ${handwriting.variable}`}>
-      <body className="antialiased">
+      {/* suppressHydrationWarning: browser extensions (π.χ. ColorZilla βάζει
+          cz-shortcut-listen) πειράζουν attributes του <body> πριν το hydration.
+          Αφορά ΜΟΝΟ attributes αυτού του στοιχείου, όχι το δέντρο από κάτω. */}
+      <body className="antialiased" suppressHydrationWarning>
         <script
           type="application/ld+json"
           // Static, author-controlled object — no user input reaches this.
