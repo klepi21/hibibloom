@@ -5,7 +5,7 @@ import { gsap, prefersReducedMotion } from "@/lib/gsap"
 import { SectionHeading } from "@/components/ui/SectionHeading"
 import { Hibiscus } from "@/components/botanical/Hibiscus"
 import { Leaf } from "@/components/botanical/Flora"
-import { instructor } from "@/content/site"
+import { useContent } from "@/content/LangProvider"
 
 /**
  * Η δασκάλα: η Ρεγγίνα Αυγουστή, μόνη της.
@@ -15,6 +15,7 @@ import { instructor } from "@/content/site"
  * η πραγματική φωτογραφία της Ρεγγίνας μπαίνει στη θέση του χωρίς άλλη αλλαγή.
  */
 export function Instructor() {
+  const { instructor } = useContent()
   const root = useRef<HTMLElement>(null)
 
   useEffect(() => {

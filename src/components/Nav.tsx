@@ -5,7 +5,9 @@ import Image from "next/image"
 import { gsap, prefersReducedMotion } from "@/lib/gsap"
 import { MagneticButton } from "@/components/ui/MagneticButton"
 import { Hibiscus } from "@/components/botanical/Hibiscus"
-import { nav } from "@/content/site"
+import { useContent, useLang } from "@/content/LangProvider"
+import { href } from "@/content"
+import { LangSwitch } from "@/components/LangSwitch"
 
 /**
  * Navigation.
@@ -16,7 +18,15 @@ import { nav } from "@/content/site"
  * close.
  */
 
-export function Nav() {
+/**
+ * `onHome`: section links are in-page anchors. On the landing pages they point
+ * back at the home page's sections instead.
+ */
+export function Nav({ onHome = true }: { onHome?: boolean }) {
+  const { nav, ui, contact } = useContent()
+  const lang = useLang()
+  const homePath = href("home", lang)
+  const to = (anchor: string) => (onHome ? anchor : `${homePath}${anchor}`)
   const [open, setOpen] = useState(false)
   const [settled, setSettled] = useState(false)
   const panel = useRef<HTMLDivElement>(null)
@@ -101,7 +111,7 @@ export function Nav() {
         }`}
       >
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-6 px-5 sm:px-8">
-          <a href="#" aria-label="Hibi Bloom" className="relative block w-[112px] shrink-0 sm:w-[132px]">
+          <a href={onHome ? "#" : homePath} aria-label="Hibi Bloom" className="relative block w-[112px] shrink-0 sm:w-[132px]">
             <Image
               src="/brand/logo-full-320.webp"
               alt="Hibi Bloom"
@@ -112,11 +122,11 @@ export function Nav() {
             />
           </a>
 
-          <nav aria-label="Κύρια πλοήγηση" className="hidden items-center gap-7 lg:flex">
+          <nav aria-label={ui.mainNav} className="hidden items-center gap-7 lg:flex">
             {nav.links.map((l) => (
               <a
                 key={l.href}
-                href={l.href}
+                href={to(l.href)}
                 className="group relative text-[0.9rem] text-forest/75 transition-colors duration-300 hover:text-forest"
               >
                 {l.label}
@@ -126,13 +136,14 @@ export function Nav() {
           </nav>
 
           <div className="flex items-center gap-3">
+            <LangSwitch />
             {/* Wrapped rather than given `hidden sm:inline-flex` directly:
                 MagneticButton's own base classes include `inline-flex`, and two
                 competing display utilities at equal specificity let the base
                 win — the button stayed visible at every width. */}
             <span className="hidden sm:block">
               <MagneticButton
-                href="#epikoinonia"
+                href={`#${contact.id}`}
                 variant="primary"
                 strength={0.24}
                 className="!px-6 !py-3 !text-[0.86rem]"
@@ -167,7 +178,7 @@ export function Nav() {
           id="mobile-menu"
           role="dialog"
           aria-modal="true"
-          aria-label="Μενού"
+          aria-label={ui.menu}
           className="on-dark fixed inset-0 z-[110] flex flex-col bg-forest"
         >
           <div className="wash-forest pointer-events-none absolute inset-0 opacity-80" />
@@ -200,13 +211,13 @@ export function Nav() {
           </div>
 
           <nav
-            aria-label="Πλοήγηση"
+            aria-label={ui.mobileNav}
             className="relative flex flex-1 flex-col justify-center gap-1 px-6 sm:px-10"
           >
             {nav.links.map((l, i) => (
               <a
                 key={l.href}
-                href={l.href}
+                href={to(l.href)}
                 onClick={() => setOpen(false)}
                 className="nav-item group flex items-baseline gap-4 py-2.5 text-[clamp(1.6rem,7vw,2.6rem)] font-light text-cream transition-colors duration-300 hover:text-melon"
               >
@@ -219,8 +230,9 @@ export function Nav() {
           </nav>
 
           <div className="nav-item relative px-6 pb-10 sm:px-10">
+            <LangSwitch tone="cream" labels className="mb-6" />
             <MagneticButton
-              href="#epikoinonia"
+              href={`#${contact.id}`}
               variant="primary"
               className="w-full"
               onClick={() => setOpen(false)}

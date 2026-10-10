@@ -8,7 +8,7 @@ import { ScrollBloom } from "@/components/botanical/ScrollBloom"
 import { KidFloat } from "@/components/botanical/KidFloat"
 import { SectionHeading } from "@/components/ui/SectionHeading"
 import { MagneticButton } from "@/components/ui/MagneticButton"
-import { programs } from "@/content/site"
+import { useContent } from "@/content/LangProvider"
 
 /**
  * Scene 04 — confidence creates connection.
@@ -52,7 +52,17 @@ const ACCENTS = {
   },
 } as const
 
-export function Programs() {
+/** Heading overrides for reuse on the landing pages. */
+type HeadingProps = { kicker?: string; title?: string; lead?: string }
+
+export function Programs({
+  only,
+  links,
+  ...heading
+}: HeadingProps & { only?: number[]; links?: { label: string; href: string }[] }) {
+  const { programs: base, contact } = useContent()
+  const programs = { ...base, ...heading }
+  const items = only ? only.map((i) => base.items[i]) : base.items
   const root = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -116,8 +126,8 @@ export function Programs() {
       <div className="mx-auto max-w-[1240px] px-5 sm:px-8">
         <SectionHeading kicker={programs.kicker} title={programs.title} lead={programs.lead} />
 
-        <div className="program-grid mt-16 grid gap-6 md:grid-cols-2">
-          {programs.items.map((p, i) => {
+        <div className={`program-grid mt-16 grid gap-6 md:grid-cols-2 ${items.length === 3 ? "lg:grid-cols-3" : ""}`}>
+          {items.map((p, i) => {
             const a = ACCENTS[p.accent as keyof typeof ACCENTS]
             return (
               <article
@@ -171,10 +181,27 @@ export function Programs() {
           })}
         </div>
 
-        <div className="mt-14 flex justify-center">
-          <MagneticButton href="#epikoinonia" variant="primary">
+        <div className="mt-14 flex flex-col items-center gap-8">
+          <MagneticButton href={`#${contact.id}`} variant="primary">
             {programs.cta}
           </MagneticButton>
+
+          {/* Into the landing pages: real links, so search engines follow them too. */}
+          {links && (
+            <ul className="flex flex-wrap justify-center gap-3">
+              {links.map((l) => (
+                <li key={l.href}>
+                  <a
+                    href={l.href}
+                    className="inline-flex items-center gap-2 rounded-full border border-forest/12 bg-white/60 px-5 py-2.5 text-[0.88rem] text-forest/75 transition-colors duration-300 hover:border-magenta/50 hover:text-magenta"
+                  >
+                    {l.label}
+                    <span aria-hidden="true">→</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </section>

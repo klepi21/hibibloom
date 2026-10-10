@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
     deviceSizes: [400, 640, 828, 1080, 1280, 1600, 1920, 2560],
   },
   poweredByHeader: false,
+  experimental: {
+    // Two root layouts (Greek and English) leave no single layout to build a
+    // 404 from; global-not-found.tsx renders unmatched URLs on its own.
+    globalNotFound: true,
+  },
 }
 
 export default nextConfig

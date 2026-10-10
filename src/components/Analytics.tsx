@@ -1,7 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { analytics } from "@/content/site"
+import { useContent, useLang } from "@/content/LangProvider"
+import { content, href } from "@/content"
+
+// Same measurement ID in every language.
+const GA_ID = content.el.analytics.gaId
 
 /**
  * Google Analytics 4, loaded only after the visitor says yes (GDPR / ePrivacy).
@@ -58,12 +62,14 @@ function clearGaCookies() {
 }
 
 export function Analytics() {
+  const { analytics } = useContent()
+  const lang = useLang()
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    if (!analytics.gaId) return
+    if (!GA_ID) return
     const choice = readChoice()
-    if (choice === "granted") loadGa(analytics.gaId)
+    if (choice === "granted") loadGa(GA_ID)
 
     // Shown a beat after load so it never competes with the intro's first frame.
     const t = choice === null ? window.setTimeout(() => setOpen(true), 1200) : undefined
@@ -81,7 +87,7 @@ export function Analytics() {
       localStorage.setItem(KEY, choice)
     } catch {}
     setOpen(false)
-    if (choice === "granted") loadGa(analytics.gaId)
+    if (choice === "granted") loadGa(GA_ID)
     else if (window.gtag) {
       // Withdrawn after GA already ran: drop its cookies and reload clean.
       clearGaCookies()
@@ -99,7 +105,7 @@ export function Analytics() {
     >
       <p className="text-[0.92rem] leading-[1.7] text-forest/80">
         {analytics.text}{" "}
-        <a href="/aporrito" className="underline underline-offset-4 hover:text-magenta-600">
+        <a href={href("privacy", lang)} className="underline underline-offset-4 hover:text-magenta-600">
           {analytics.more}
         </a>
       </p>
@@ -124,7 +130,7 @@ export function Analytics() {
 }
 
 export function CookieSettingsButton({ label, className }: { label: string; className?: string }) {
-  if (!analytics.gaId) return null
+  if (!GA_ID) return null
   return (
     <button type="button" onClick={() => window.dispatchEvent(new Event(REOPEN))} className={className}>
       {label}

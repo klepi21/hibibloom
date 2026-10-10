@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 import Image from "next/image"
 import { gsap, prefersReducedMotion } from "@/lib/gsap"
 import { Hibiscus } from "@/components/botanical/Hibiscus"
-import { loader } from "@/content/site"
+import { useContent } from "@/content/LangProvider"
 
 /**
  * The opening bloom.
@@ -35,6 +35,7 @@ function shouldPlayIntro(): boolean {
 const neverChanges = () => () => {}
 
 export function Preloader() {
+  const { loader } = useContent()
   const play = useSyncExternalStore(neverChanges, shouldPlayIntro, () => false)
   const [done, setDone] = useState(false)
   const root = useRef<HTMLDivElement>(null)

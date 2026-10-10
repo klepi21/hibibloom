@@ -1,5 +1,6 @@
 /**
- * Hibi Bloom: όλο το κείμενο του site σε ένα σημείο.
+ * Hibi Bloom: όλο το ελληνικό κείμενο του site σε ένα σημείο.
+ * Το en.ts έχει ακριβώς το ίδιο σχήμα (τύπος Content).
  *
  * Το Hibi Bloom δεν έχει δικό του χώρο. Η Ρεγγίνα Αυγουστή κάνει μαθήματα
  * κατ' οίκον και σε συνεργαζόμενους χώρους yoga για παιδιά.
@@ -15,9 +16,22 @@ export const site = {
   tagline: "kids & teens yoga",
   locale: "el_GR",
   url: "https://www.hibibloom.gr",
+  /** Short, keyword-led title for the home page <title>. */
+  title: "Hibi Bloom · Yoga για παιδιά & εφήβους στην Αθήνα",
+  ogTitle: "Hibi Bloom · Κάθε παιδί αξίζει να ανθίσει",
+  keywords: [
+    "παιδική yoga",
+    "yoga για παιδιά",
+    "yoga για εφήβους",
+    "yoga για παιδιά Αθήνα",
+    "κατ' οίκον yoga για παιδιά",
+    "ενσυνειδητότητα παιδιά",
+    "Hibi Bloom",
+  ],
+  areaServed: "Αθήνα",
   description:
     "Yoga, ενσυνειδητότητα και δημιουργικό παιχνίδι για παιδιά και εφήβους. Μαθήματα στο σπίτι σας και σε συνεργαζόμενους χώρους, με τη Ρεγγίνα Αυγουστή.",
-} as const
+}
 
 export const nav = {
   links: [
@@ -32,7 +46,7 @@ export const nav = {
   menuOpen: "Άνοιγμα μενού",
   menuClose: "Κλείσιμο μενού",
   skip: "Μετάβαση στο περιεχόμενο",
-} as const
+}
 
 export const hero = {
   eyebrow: "Yoga για παιδιά & εφήβους",
@@ -45,7 +59,7 @@ export const hero = {
   cta: "Κλείστε ένα δοκιμαστικό μάθημα",
   ctaSecondary: "Δείτε τα προγράμματα",
   scroll: "Κυλήστε για να ανθίσει",
-} as const
+}
 
 export const why = {
   id: "giati",
@@ -53,7 +67,7 @@ export const why = {
   title: "Γιατί Hibi Bloom",
   lead: "Δεν διδάσκουμε στάσεις. Δίνουμε στα παιδιά έναν τρόπο να νιώθουν ασφαλή μέσα τους.",
   body: "Κάθε παιδί έρχεται με τον δικό του ρυθμό, τη δική του ένταση, τη δική του περιέργεια. Δουλειά μας δεν είναι να τα κάνουμε ίδια. Δουλειά μας είναι να τους δώσουμε χώρο, χρόνο και εργαλεία. Έτσι η yoga γίνεται παιχνίδι, η αναπνοή γίνεται καταφύγιο και η κίνηση γίνεται γλώσσα.",
-} as const
+}
 
 export const benefits = {
   id: "ofeli",
@@ -86,13 +100,13 @@ export const benefits = {
       text: "Γιατί ένα παιδί που γελάει, μαθαίνει βαθύτερα. Πάντα.",
     },
   ],
-} as const
+}
 
 export const bloom = {
   kicker: "Η ιστορία μας σε μία εικόνα",
   line: "Κάθε μάθημα, ένα πέταλο ακόμα.",
   aria: "Ένας ιβίσκος ανθίζει καθώς κυλάτε τη σελίδα",
-} as const
+}
 
 export const programs = {
   id: "programmata",
@@ -138,7 +152,7 @@ export const programs = {
       accent: "forest",
     },
   ],
-} as const
+}
 
 export const home = {
   id: "katoikon",
@@ -170,7 +184,7 @@ export const home = {
     { title: "Δοκιμάζουμε", text: "Ένα δοκιμαστικό μάθημα, χωρίς καμία δέσμευση." },
     { title: "Ανθίζουμε", text: "Βρίσκουμε τον ρυθμό μας και το ραντεβού γίνεται συνήθεια." },
   ],
-} as const
+}
 
 export const instructor = {
   id: "daskala",
@@ -183,7 +197,7 @@ export const instructor = {
     "Η Ρεγγίνα δημιούργησε το Hibi Bloom με μια απλή ιδέα: η yoga για τα παιδιά δεν χρειάζεται αίθουσα, χρειάζεται σχέση. Γι' αυτό έρχεται εκείνη στα παιδιά, στον χώρο όπου νιώθουν πιο άνετα.",
     "Στα μαθήματά της το παιχνίδι και η αναπνοή έχουν την ίδια βαρύτητα. Δουλεύει με κάθε ηλικία διαφορετικά: παραμύθια με τους μικρούς, ουσιαστική συζήτηση και δυναμική ροή με τους εφήβους.",
   ],
-} as const
+}
 
 export const faq = {
   id: "erotiseis",
@@ -219,7 +233,7 @@ export const faq = {
       a: "Ναι. Υπάρχει εμπειρία με παιδιά με ΔΕΠΥ, άγχος και αισθητηριακές ιδιαιτερότητες. Το κατ' οίκον μάθημα μάλιστα βοηθάει πολύ, γιατί το παιδί βρίσκεται στο δικό του οικείο περιβάλλον.",
     },
   ],
-} as const
+}
 
 export const contact = {
   id: "epikoinonia",
@@ -252,19 +266,22 @@ export const contact = {
     email: "yoga@hibibloom.gr",
   },
   social: [{ label: "Instagram", href: "https://www.instagram.com/hibi.bloom/" }],
-} as const
+}
 
 export const footer = {
   blurb: "Yoga για παιδιά και εφήβους, εκεί όπου νιώθουν ασφαλή: στο σπίτι τους.",
   rights: "Με αγάπη, στην Αθήνα.",
-  legal: [{ label: "Πολιτική απορρήτου", href: "/aporrito" }],
+  legal: [{ label: "Πολιτική απορρήτου", route: "privacy" }],
+  navTitle: "Πλοήγηση",
+  programsTitle: "Μαθήματα",
+  contactTitle: "Επικοινωνία",
   cookies: "Ρυθμίσεις cookies",
-} as const
+}
 
 export const loader = {
   label: "Φορτώνει",
   line: "Κάθε παιδί αξίζει να ανθίσει.",
-} as const
+}
 
 export const analytics = {
   // GA4 measurement ID (public by design). Empty string disables GA and the banner.
@@ -274,4 +291,37 @@ export const analytics = {
   more: "Πολιτική απορρήτου",
   accept: "Αποδοχή",
   decline: "Απόρριψη",
-} as const
+}
+
+export const ui = {
+  mainNav: "Κύρια πλοήγηση",
+  menu: "Μενού",
+  mobileNav: "Πλοήγηση",
+  footerNav: "Υποσέλιδο",
+  langSwitch: "Αλλαγή γλώσσας",
+  langName: "Ελληνικά",
+  home: "Αρχική",
+  back: "Επιστροφή στην αρχική",
+  /** Links from the home page into the three landing pages. */
+  explore: "Μάθετε περισσότερα",
+}
+
+export const el = {
+  site,
+  nav,
+  hero,
+  why,
+  benefits,
+  bloom,
+  programs,
+  home,
+  instructor,
+  faq,
+  contact,
+  footer,
+  loader,
+  analytics,
+  ui,
+}
+
+export type Content = typeof el

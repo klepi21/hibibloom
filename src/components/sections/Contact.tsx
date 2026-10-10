@@ -7,7 +7,7 @@ import { Pollen } from "@/components/botanical/Pollen"
 import { Flight } from "@/components/botanical/Flight"
 import { MagneticButton } from "@/components/ui/MagneticButton"
 import { RevealText } from "@/components/ui/Reveal"
-import { contact } from "@/content/site"
+import { useContent, useLang } from "@/content/LangProvider"
 
 /**
  * Scene 06 — the whole garden blooms.
@@ -20,7 +20,10 @@ import { contact } from "@/content/site"
 
 type Status = "idle" | "sending" | "sent" | "error"
 
-export function Contact() {
+/** `kicker`: landing pages drop the home page's section number. */
+export function Contact({ kicker }: { kicker?: string } = {}) {
+  const { contact } = useContent()
+  const lang = useLang()
   const root = useRef<HTMLElement>(null)
   const [status, setStatus] = useState<Status>("idle")
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -90,7 +93,7 @@ export function Contact() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(data)),
+        body: JSON.stringify({ ...Object.fromEntries(data), lang }),
       })
       if (!res.ok) throw new Error(String(res.status))
       setStatus("sent")
@@ -124,7 +127,7 @@ export function Contact() {
       <div className="mx-auto max-w-[1140px] px-5 sm:px-8">
         <div className="text-center">
           <span className="mb-5 block text-[0.7rem] tracking-[0.26em] text-melon/70 uppercase">
-            {contact.kicker}
+            {kicker ?? contact.kicker}
           </span>
           <RevealText
             as="h2"

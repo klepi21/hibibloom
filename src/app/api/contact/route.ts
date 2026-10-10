@@ -1,5 +1,8 @@
 import nodemailer from "nodemailer"
-import { contact, site } from "@/content/site"
+import { content } from "@/content"
+
+// The inbox reads Greek labels whichever language the visitor used.
+const { contact, site } = content.el
 
 /**
  * Contact form handler. Sends through the Hostinger mailbox itself, so no third
@@ -71,7 +74,7 @@ export async function POST(req: Request) {
       from: { name: `${site.name} site`, address: user },
       to: process.env.CONTACT_TO ?? contact.details.email,
       replyTo: { name: f.name, address: f.email },
-      subject: `Νέο μήνυμα από ${f.name}${f.area ? ` (${f.area})` : ""}`,
+      subject: `Νέο μήνυμα από ${f.name}${f.area ? ` (${f.area})` : ""}${body.lang === "en" ? " [EN]" : ""}`,
       text,
       html,
     })

@@ -6,7 +6,7 @@ import { gsap, prefersReducedMotion } from "@/lib/gsap"
 import { SectionHeading } from "@/components/ui/SectionHeading"
 import { Sprout } from "@/components/botanical/Flora"
 import { ScrollBloom } from "@/components/botanical/ScrollBloom"
-import { home } from "@/content/site"
+import { useContent } from "@/content/LangProvider"
 
 /**
  * Scene 05: η yoga έρχεται στο παιδί, όχι το παιδί στη yoga.
@@ -22,7 +22,12 @@ const ACCENT = {
   leaf: { chip: "bg-leaf-100 text-leaf-700", ring: "hover:border-leaf/60" },
 } as const
 
-export function HomeLessons() {
+/** Heading overrides for reuse on the landing pages. */
+type HeadingProps = { kicker?: string; title?: string; lead?: string }
+
+export function HomeLessons(heading: HeadingProps) {
+  const { home: base } = useContent()
+  const home = { ...base, ...heading }
   const root = useRef<HTMLElement>(null)
 
   useEffect(() => {

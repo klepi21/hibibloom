@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next"
-import { site } from "@/content/site"
+import { content } from "@/content"
+
+const site = content.el.site
 
 export default function robots(): MetadataRoute.Robots {
   return {

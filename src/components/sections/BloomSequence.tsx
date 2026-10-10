@@ -3,7 +3,7 @@
 import { useEffect, useRef, useSyncExternalStore } from "react"
 import Image from "next/image"
 import { gsap, prefersReducedMotion } from "@/lib/gsap"
-import { bloom } from "@/content/site"
+import { useContent } from "@/content/LangProvider"
 
 /**
  * Το κινηματογραφικό ιντερμέδιο: ένας ιβίσκος ανθίζει καρέ-καρέ, οδηγημένος
@@ -27,6 +27,7 @@ const frameSrc = (i: number) => `/bloom/frame-${String(i + 1).padStart(3, "0")}.
 const noop = () => () => {}
 
 export function BloomSequence() {
+  const { bloom } = useContent()
   const section = useRef<HTMLElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const reduced = useSyncExternalStore(noop, prefersReducedMotion, () => false)

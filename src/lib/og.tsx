@@ -10,11 +10,10 @@ import path from "node:path"
  * ground, with the headline set in Comfortaa — the only brand face with Greek.
  */
 
-export const alt = "Hibi Bloom · Κάθε παιδί αξίζει να ανθίσει"
-export const size = { width: 1200, height: 630 }
-export const contentType = "image/png"
+export const ogSize = { width: 1200, height: 630 }
 
-export default async function OpengraphImage() {
+/** `line` is the headline, `kicker` the small caps line under it. */
+export async function renderOg({ line, kicker }: { line: string; kicker: string }) {
   const [logo, font] = await Promise.all([
     // PNG, not WebP — Satori's image decoder does not handle WebP.
     fs.readFile(path.join(process.cwd(), "public/brand/logo-green-og.png")),
@@ -93,6 +92,7 @@ export default async function OpengraphImage() {
           <circle cx="150" cy="158" r="26" fill="#ffb310" />
         </svg>
 
+        {/* eslint-disable-next-line @next/next/no-img-element -- Satori renders plain <img> only */}
         <img src={logoSrc} alt="" width={420} style={{ marginBottom: 34 }} />
 
         <div
@@ -104,7 +104,7 @@ export default async function OpengraphImage() {
             letterSpacing: "-0.02em",
           }}
         >
-          Κάθε παιδί αξίζει να ανθίσει.
+          {line}
         </div>
 
         <div
@@ -116,12 +116,12 @@ export default async function OpengraphImage() {
             letterSpacing: "0.14em",
           }}
         >
-          YOGA ΓΙΑ ΠΑΙΔΙΑ &amp; ΕΦΗΒΟΥΣ
+          {kicker}
         </div>
       </div>
     ),
     {
-      ...size,
+      ...ogSize,
       fonts: [{ name: "Comfortaa", data: font, style: "normal", weight: 400 }],
     }
   )

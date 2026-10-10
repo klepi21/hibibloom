@@ -22,7 +22,8 @@ declare global {
   }
 }
 
-export function SmoothScroll() {
+/** `waitForIntro`: false on pages without the Preloader, which never sends hb:intro-done. */
+export function SmoothScroll({ waitForIntro = true }: { waitForIntro?: boolean }) {
   useEffect(() => {
     if (prefersReducedMotion()) return
 
@@ -70,16 +71,21 @@ export function SmoothScroll() {
         ScrollTrigger.refresh()
         lenis.scrollTo(el, { offset: -12, immediate: true, force: true })
       })
-    if (hash) window.addEventListener("hb:intro-done", landOnHash, { once: true })
+    if (hash && waitForIntro) window.addEventListener("hb:intro-done", landOnHash, { once: true })
+    else if (hash) {
+      if (document.readyState === "complete") landOnHash()
+      else window.addEventListener("load", landOnHash, { once: true })
+    }
 
     return () => {
       window.removeEventListener("hb:intro-done", landOnHash)
+      window.removeEventListener("load", landOnHash)
       document.removeEventListener("click", onClick)
       gsap.ticker.remove(raf)
       lenis.destroy()
       delete window.__lenis
     }
-  }, [])
+  }, [waitForIntro])
 
   return null
 }

@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading"
 import { Leaf } from "@/components/botanical/Flora"
 import { ScrollBloom } from "@/components/botanical/ScrollBloom"
 import { KidFloat } from "@/components/botanical/KidFloat"
-import { faq } from "@/content/site"
+import { useContent } from "@/content/LangProvider"
 
 /**
  * FAQ.
@@ -16,7 +16,12 @@ import { faq } from "@/content/site"
  * so the answers remain indexable.
  */
 
-export function Faq() {
+type FaqItem = { q: string; a: string }
+
+/** Defaults to the home page FAQ; landing pages pass their own questions. */
+export function Faq(props: { id?: string; kicker?: string; title?: string; items?: FaqItem[] }) {
+  const { faq: home } = useContent()
+  const faq = { ...home, ...props }
   const [open, setOpen] = useState<number | null>(0)
 
   return (

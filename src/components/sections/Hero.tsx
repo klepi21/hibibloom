@@ -8,7 +8,7 @@ import { Leaf, SunRays } from "@/components/botanical/Flora"
 import { Pollen } from "@/components/botanical/Pollen"
 import { Flight, useLeafBreeze } from "@/components/botanical/Flight"
 import { MagneticButton } from "@/components/ui/MagneticButton"
-import { hero } from "@/content/site"
+import { useContent } from "@/content/LangProvider"
 
 /**
  * Scene 01 — the flower blooms.
@@ -19,6 +19,7 @@ import { hero } from "@/content/site"
  */
 
 export function Hero() {
+  const { hero, contact, programs } = useContent()
   const root = useRef<HTMLElement>(null)
   const flower = useRef<HTMLDivElement>(null)
   useLeafBreeze(root)
@@ -244,10 +245,10 @@ export function Hero() {
         </ul>
 
         <div className="hero-rise mt-7 flex flex-col items-center gap-3 sm:flex-row">
-          <MagneticButton href="#epikoinonia" variant="primary">
+          <MagneticButton href={`#${contact.id}`} variant="primary">
             {hero.cta}
           </MagneticButton>
-          <MagneticButton href="#programmata" variant="ghost" strength={0.2}>
+          <MagneticButton href={`#${programs.id}`} variant="ghost" strength={0.2}>
             {hero.ctaSecondary}
           </MagneticButton>
         </div>

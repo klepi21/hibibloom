@@ -5,7 +5,7 @@ import { gsap, prefersReducedMotion } from "@/lib/gsap"
 import { Hibiscus } from "@/components/botanical/Hibiscus"
 import { SectionHeading } from "@/components/ui/SectionHeading"
 import { Pollen } from "@/components/botanical/Pollen"
-import { benefits } from "@/content/site"
+import { useContent } from "@/content/LangProvider"
 
 /**
  * Scene 03 — movement creates confidence.
@@ -15,7 +15,12 @@ import { benefits } from "@/content/site"
  * the flower opens further and turns a few degrees.
  */
 
-export function Benefits() {
+/** Heading overrides for reuse on the landing pages. */
+type HeadingProps = { kicker?: string; title?: string; lead?: string }
+
+export function Benefits(heading: HeadingProps) {
+  const { benefits: base } = useContent()
+  const benefits = { ...base, ...heading }
   const root = useRef<HTMLElement>(null)
 
   useEffect(() => {

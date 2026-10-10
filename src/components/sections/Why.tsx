@@ -7,7 +7,7 @@ import { Vine } from "@/components/botanical/Flora"
 import { ScrollBloom } from "@/components/botanical/ScrollBloom"
 import { KidFloat } from "@/components/botanical/KidFloat"
 import { SectionHeading } from "@/components/ui/SectionHeading"
-import { why } from "@/content/site"
+import { useContent } from "@/content/LangProvider"
 
 /**
  * Scene 02 — children discover movement.
@@ -17,6 +17,7 @@ import { why } from "@/content/site"
  */
 
 export function Why() {
+  const { why } = useContent()
   const root = useRef<HTMLElement>(null)
 
   useEffect(() => {

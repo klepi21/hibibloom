@@ -1,18 +1,22 @@
 import Image from "next/image"
-import { footer, nav, site, contact } from "@/content/site"
+import { getContent, href, type Lang } from "@/content"
+import { pageContent, landingKeys } from "@/content/pages"
 import { CookieSettingsButton } from "@/components/Analytics"
 
 /**
  * Footer. Server-rendered — nothing here needs to be interactive.
  */
-export function Footer() {
+export function Footer({ lang, onHome = true }: { lang: Lang; onHome?: boolean }) {
+  const { footer, nav, site, contact, ui } = getContent(lang)
+  const pages = pageContent[lang].pages
+  const homePath = href("home", lang)
   const year = 2026 // Static so the markup is deterministic between builds.
 
   return (
     <footer className="on-dark relative isolate overflow-hidden bg-ink text-cream/70">
       <div className="mx-auto max-w-[1240px] px-5 py-16 sm:px-8 sm:py-20">
         <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-4">
             <div className="w-[150px]">
               <Image
                 src="/brand/logo-green-320.webp"
@@ -27,15 +31,15 @@ export function Footer() {
             </p>
           </div>
 
-          <nav aria-label="Υποσέλιδο" className="lg:col-span-4">
+          <nav aria-label={ui.footerNav} className="lg:col-span-3">
             <h2 className="mb-5 text-[0.68rem] tracking-[0.22em] text-melon/60 uppercase">
-              Πλοήγηση
+              {footer.navTitle}
             </h2>
-            <ul className="grid grid-cols-2 gap-x-6 gap-y-3">
+            <ul className="grid grid-cols-2 gap-x-6 gap-y-3 lg:grid-cols-1">
               {nav.links.map((l) => (
                 <li key={l.href}>
                   <a
-                    href={`/${l.href}`}
+                    href={onHome ? l.href : `${homePath}${l.href}`}
                     className="text-[0.92rem] text-cream/65 transition-colors duration-300 hover:text-melon"
                   >
                     {l.label}
@@ -45,9 +49,27 @@ export function Footer() {
             </ul>
           </nav>
 
+          <div className="lg:col-span-2">
+            <h2 className="mb-5 text-[0.68rem] tracking-[0.22em] text-melon/60 uppercase">
+              {footer.programsTitle}
+            </h2>
+            <ul className="space-y-3">
+              {landingKeys.map((k) => (
+                <li key={k}>
+                  <a
+                    href={href(k, lang)}
+                    className="text-[0.92rem] text-cream/65 transition-colors duration-300 hover:text-melon"
+                  >
+                    {pages[k].link}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           <div className="lg:col-span-3">
             <h2 className="mb-5 text-[0.68rem] tracking-[0.22em] text-melon/60 uppercase">
-              Επικοινωνία
+              {footer.contactTitle}
             </h2>
             <address className="space-y-2 text-[0.92rem] not-italic text-cream/65">
               <p>{contact.details.areas}</p>
@@ -87,7 +109,7 @@ export function Footer() {
           <ul className="flex gap-6">
             {footer.legal.map((l) => (
               <li key={l.label}>
-                <a href={l.href} className="transition-colors duration-300 hover:text-melon">
+                <a href={href(l.route as "privacy", lang)} className="transition-colors duration-300 hover:text-melon">
                   {l.label}
                 </a>
               </li>
