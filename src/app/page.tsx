@@ -9,7 +9,6 @@ import { BloomSequence } from "@/components/sections/BloomSequence"
 import { Programs } from "@/components/sections/Programs"
 import { HomeLessons } from "@/components/sections/HomeLessons"
 import { Instructor } from "@/components/sections/Instructor"
-import { Testimonials } from "@/components/sections/Testimonials"
 import { Faq } from "@/components/sections/Faq"
 import { Contact } from "@/components/sections/Contact"
 import { Footer } from "@/components/sections/Footer"
@@ -20,7 +19,7 @@ import { Footer } from "@/components/sections/Footer"
  *   02 children discover movement    → Why
  *   03 movement creates confidence   → Benefits
  *   04 confidence creates connection → Programs, sealed by the bloom timelapse
- *   05 the yoga comes to the child   → HomeLessons / Instructor / Testimonials
+ *   05 the yoga comes to the child   → HomeLessons / Instructor
  *   06 the whole garden blooms       → Contact
  *
  * Extra thread: ScrollBloom flowers scattered through the light sections open
@@ -45,7 +44,6 @@ export default function Home() {
         <BloomSequence />
         <HomeLessons />
         <Instructor />
-        <Testimonials />
         <Faq />
         <Contact />
       </main>

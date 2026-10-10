@@ -59,7 +59,21 @@ export function SmoothScroll() {
     }
     document.addEventListener("click", onClick)
 
+    // Arriving on /#section: the browser's native jump happens before pins and
+    // images settle (and the intro scrolls to top), so land again once the
+    // intro is over and ScrollTrigger has measured the final layout.
+    const hash = location.hash.length > 1 ? decodeURIComponent(location.hash.slice(1)) : ""
+    const landOnHash = () =>
+      requestAnimationFrame(() => {
+        const el = hash && document.getElementById(hash)
+        if (!el) return
+        ScrollTrigger.refresh()
+        lenis.scrollTo(el, { offset: -12, immediate: true, force: true })
+      })
+    if (hash) window.addEventListener("hb:intro-done", landOnHash, { once: true })
+
     return () => {
+      window.removeEventListener("hb:intro-done", landOnHash)
       document.removeEventListener("click", onClick)
       gsap.ticker.remove(raf)
       lenis.destroy()

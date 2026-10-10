@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next"
 import localFont from "next/font/local"
 import "./globals.css"
-import { site } from "@/content/site"
+import { site, contact, faq, instructor } from "@/content/site"
+import { Analytics } from "@/components/Analytics"
 
 /**
  * Comfortaa carries the entire Greek UI — it is the only one of the two brand
@@ -84,12 +85,29 @@ export const viewport: Viewport = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
+  "@id": `${site.url}/#business`,
   name: site.name,
   description: site.description,
   url: site.url,
-  founder: { "@type": "Person", name: "Ρεγγίνα Αυγουστή" },
+  logo: `${site.url}/brand/logo-green-640.webp`,
+  image: `${site.url}/opengraph-image`,
+  telephone: "+306999114031",
+  email: contact.details.email,
+  founder: { "@type": "Person", name: instructor.name },
   areaServed: { "@type": "City", name: "Αθήνα" },
   knowsLanguage: ["el", "en"],
+  sameAs: contact.social.map((s) => s.href),
+}
+
+/** FAQ rich result, built from the same answers the visitor reads. */
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.items.map((i) => ({
+    "@type": "Question",
+    name: i.q,
+    acceptedAnswer: { "@type": "Answer", text: i.a },
+  })),
 }
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -104,7 +122,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           // Static, author-controlled object — no user input reaches this.
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+        />
         {children}
+        <Analytics />
       </body>
     </html>
   )

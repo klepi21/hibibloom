@@ -102,7 +102,7 @@ export function RevealText({
         delay,
         ease: "power4.out",
         stagger,
-        scrollTrigger: { trigger: el, start, once: true },
+        scrollTrigger: { trigger: el, start, toggleActions: "play none play none" },
       }
     )
     return () => {

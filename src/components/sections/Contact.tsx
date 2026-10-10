@@ -14,8 +14,8 @@ import { contact } from "@/content/site"
  *
  * A giant hibiscus opens behind the closing call to action as the section is
  * pinned, then the form arrives. The form validates client-side and reports
- * errors through `aria-describedby`; it has no backend yet, so submission is
- * simulated and clearly marked below.
+ * errors through `aria-describedby`, then posts to /api/contact, which mails
+ * the message to the Hibi Bloom inbox.
  */
 
 type Status = "idle" | "sending" | "sent" | "error"
@@ -64,7 +64,7 @@ export function Contact() {
     return () => ctx.revert()
   }, [])
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const data = new FormData(e.currentTarget)
     const next: Record<string, string> = {}
@@ -85,10 +85,19 @@ export function Contact() {
       return
     }
 
-    // NOTE: no backend is wired up. Point this at your form handler
-    // (Formspree, Resend, a route handler, …) before launch.
     setStatus("sending")
-    window.setTimeout(() => setStatus("sent"), 900)
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.fromEntries(data)),
+      })
+      if (!res.ok) throw new Error(String(res.status))
+      setStatus("sent")
+      window.gtag?.("event", "generate_lead", { form: "contact" })
+    } catch {
+      setStatus("error")
+    }
   }
 
   return (
@@ -166,6 +175,16 @@ export function Contact() {
                 />
                 <Field id="child" name="child" label={contact.form.child} />
 
+                {/* Honeypot: hidden from people and screen readers, bots fill it. */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="absolute -left-[9999px] h-px w-px opacity-0"
+                />
+
                 {/* Χωρίς δικό μας χώρο, η περιοχή είναι το πρώτο πράγμα που
                     χρειαζόμαστε για να απαντήσουμε αν καλύπτεται κατ' οίκον. */}
                 <div className="sm:col-span-2">
@@ -191,6 +210,12 @@ export function Contact() {
                   {contact.form.consent}
                 </label>
 
+                {status === "error" && (
+                  <p role="alert" className="text-[0.9rem] text-magenta-300 sm:col-span-2">
+                    {contact.form.error}
+                  </p>
+                )}
+
                 <div className="sm:col-span-2">
                   <MagneticButton type="submit" variant="primary" disabled={status === "sending"}>
                     {status === "sending" ? contact.form.sending : contact.form.submit}
@@ -204,16 +229,23 @@ export function Contact() {
           <div className="lg:col-span-5">
             <dl className="space-y-7">
               {[
-                [contact.details.areasLabel, contact.details.areas],
-                [contact.details.phoneLabel, contact.details.phone],
-                [contact.details.emailLabel, contact.details.email],
-                [contact.details.hoursLabel, contact.details.hours],
-              ].map(([label, value]) => (
+                [contact.details.areasLabel, contact.details.areas, null],
+                [contact.details.phoneLabel, contact.details.phone, contact.details.phoneHref],
+                [contact.details.emailLabel, contact.details.email, `mailto:${contact.details.email}`],
+              ].map(([label, value, href]) => (
                 <div key={label}>
                   <dt className="mb-1.5 text-[0.68rem] tracking-[0.22em] text-melon/60 uppercase">
                     {label}
                   </dt>
-                  <dd className="text-[1.02rem] text-cream/85">{value}</dd>
+                  <dd className="text-[1.02rem] text-cream/85">
+                    {href ? (
+                      <a href={href} className="transition-colors duration-300 hover:text-melon">
+                        {value}
+                      </a>
+                    ) : (
+                      value
+                    )}
+                  </dd>
                 </div>
               ))}
             </dl>
@@ -223,6 +255,8 @@ export function Contact() {
                 <li key={s.label}>
                   <a
                     href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex rounded-full border border-leaf/25 px-5 py-2.5 text-[0.85rem] text-cream/75 transition-all duration-400 hover:border-melon/60 hover:text-melon"
                   >
                     {s.label}

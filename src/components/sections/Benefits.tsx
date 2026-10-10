@@ -33,7 +33,7 @@ export function Benefits() {
         gsap.set(stamen, { opacity: 0 })
 
         const tl = gsap.timeline({
-          scrollTrigger: { trigger: card, start: "top 85%", once: true },
+          scrollTrigger: { trigger: card, start: "top 85%", toggleActions: "play none play none" },
         })
 
         tl.fromTo(

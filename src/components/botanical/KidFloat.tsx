@@ -47,7 +47,7 @@ export function KidFloat({
           scale: 1,
           duration: 1.1,
           ease: "back.out(1.4)",
-          scrollTrigger: { trigger: el, start: "top 92%", once: true },
+          scrollTrigger: { trigger: el, start: "top 92%", toggleActions: "play none play none" },
         }
       )
 

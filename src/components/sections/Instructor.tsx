@@ -30,7 +30,7 @@ export function Instructor() {
           rotate: 0,
           duration: 1.1,
           ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 74%", once: true },
+          scrollTrigger: { trigger: el, start: "top 74%", toggleActions: "play none play none" },
         }
       )
       gsap.fromTo(
@@ -42,7 +42,7 @@ export function Instructor() {
           duration: 0.9,
           ease: "power3.out",
           stagger: 0.1,
-          scrollTrigger: { trigger: el, start: "top 70%", once: true },
+          scrollTrigger: { trigger: el, start: "top 70%", toggleActions: "play none play none" },
         }
       )
     }, el)
@@ -72,12 +72,6 @@ export function Instructor() {
                   <Hibiscus seed={961} idPrefix="regina" glow={false} className="h-auto w-full" />
                 </div>
               </div>
-              <span
-                aria-hidden="true"
-                className="absolute right-0 bottom-0 left-0 bg-gradient-to-t from-white/70 to-transparent px-6 pt-10 pb-5 text-center text-[0.72rem] tracking-[0.18em] text-forest/45 uppercase"
-              >
-                {instructor.photoNote}
-              </span>
             </div>
           </div>
 
@@ -87,9 +81,6 @@ export function Instructor() {
               {instructor.name}
             </h3>
             <p className="mt-2 text-[0.95rem] text-magenta-600">{instructor.role}</p>
-            <p className="mt-1 text-[0.72rem] tracking-[0.2em] text-forest/40 uppercase">
-              {instructor.creds}
-            </p>
 
             <blockquote className="mt-8 border-l-2 border-melon pl-5 font-display text-[clamp(1.15rem,2.3vw,1.5rem)] leading-[1.5] text-forest/85">
               «{instructor.quote}»

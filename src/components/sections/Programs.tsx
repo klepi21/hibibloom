@@ -69,7 +69,7 @@ export function Programs() {
           duration: 1,
           ease: "power3.out",
           stagger: 0.11,
-          scrollTrigger: { trigger: ".program-grid", start: "top 84%", once: true },
+          scrollTrigger: { trigger: ".program-grid", start: "top 84%", toggleActions: "play none play none" },
         }
       )
 

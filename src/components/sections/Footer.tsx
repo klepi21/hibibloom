@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { footer, nav, site, contact } from "@/content/site"
+import { CookieSettingsButton } from "@/components/Analytics"
 
 /**
  * Footer. Server-rendered — nothing here needs to be interactive.
@@ -34,7 +35,7 @@ export function Footer() {
               {nav.links.map((l) => (
                 <li key={l.href}>
                   <a
-                    href={l.href}
+                    href={`/${l.href}`}
                     className="text-[0.92rem] text-cream/65 transition-colors duration-300 hover:text-melon"
                   >
                     {l.label}
@@ -51,7 +52,7 @@ export function Footer() {
             <address className="space-y-2 text-[0.92rem] not-italic text-cream/65">
               <p>{contact.details.areas}</p>
               <p>
-                <a href={`tel:${contact.details.phone.replace(/\s/g, "")}`} className="transition-colors hover:text-melon">
+                <a href={contact.details.phoneHref} className="transition-colors hover:text-melon">
                   {contact.details.phone}
                 </a>
               </p>
@@ -67,6 +68,8 @@ export function Footer() {
                 <li key={s.label}>
                   <a
                     href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-[0.86rem] text-cream/55 underline-offset-4 transition-colors duration-300 hover:text-melon hover:underline"
                   >
                     {s.label}
@@ -89,6 +92,12 @@ export function Footer() {
                 </a>
               </li>
             ))}
+            <li>
+              <CookieSettingsButton
+                label={footer.cookies}
+                className="transition-colors duration-300 hover:text-melon"
+              />
+            </li>
           </ul>
         </div>
       </div>

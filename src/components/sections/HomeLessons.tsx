@@ -39,7 +39,7 @@ export function HomeLessons() {
           duration: 1,
           ease: "power3.out",
           stagger: 0.14,
-          scrollTrigger: { trigger: ".place-grid", start: "top 84%", once: true },
+          scrollTrigger: { trigger: ".place-grid", start: "top 84%", toggleActions: "play none play none" },
         }
       )
 
@@ -52,7 +52,7 @@ export function HomeLessons() {
           duration: 0.85,
           ease: "power3.out",
           stagger: 0.12,
-          scrollTrigger: { trigger: ".step-row", start: "top 88%", once: true },
+          scrollTrigger: { trigger: ".step-row", start: "top 88%", toggleActions: "play none play none" },
         }
       )
 
