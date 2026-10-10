@@ -22,11 +22,12 @@ export const en: Content = {
       "children's yoga at home",
       "mindfulness for kids",
       "kids yoga classes Athens",
+      "English speaking kids yoga Athens",
       "Hibi Bloom",
     ],
     areaServed: "Athens",
     description:
-      "Yoga, mindfulness and creative play for children and teenagers. Lessons in your own home or at partner studios in Athens, with Regina Avgousti.",
+      "Yoga, mindfulness and creative play for children and teenagers, taught in English or Greek. Lessons in your own home or at partner studios in Athens, with Regina Avgousti.",
   },
 
   nav: {
@@ -219,6 +220,10 @@ export const en: Content = {
       {
         q: "One-to-one or group lessons?",
         a: "Both. At home, lessons are one-to-one or with siblings and friends. At partner studios there are small group classes by age.",
+      },
+      {
+        q: "Are lessons taught in English?",
+        a: "Yes. Regina teaches in English as well as Greek, so lessons suit international families in Athens, bilingual children and pupils at international schools.",
       },
       {
         q: "How does the trial lesson work?",

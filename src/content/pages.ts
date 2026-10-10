@@ -248,7 +248,7 @@ const en: PageSet = {
         "Yoga classes for children aged 3 to 13 in Athens, in your home or at partner studios. Play, breathing and movement for confidence and focus. Trial lesson with no commitment.",
       kicker: "Yoga for children",
       h1: "Kids yoga in Athens",
-      lead: "Play, breathing and movement for children aged 3 to 13. In your own home or at a welcoming partner studio, with Regina Avgousti.",
+      lead: "Play, breathing and movement for children aged 3 to 13, taught in English or Greek. In your own home or at a welcoming partner studio, with Regina Avgousti.",
       cta: "Book a trial lesson",
       ctaSecondary: { label: "See the age groups", anchor: "programmes" },
       intro: {
@@ -295,6 +295,10 @@ const en: PageSet = {
           {
             q: "Does my child need any experience?",
             a: "Not at all. Most children start with no yoga experience whatsoever.",
+          },
+          {
+            q: "Are the lessons in English?",
+            a: "Yes. Regina teaches in English as well as Greek, so lessons work for international families and bilingual children alike.",
           },
           {
             q: "Can lessons take place at home?",
@@ -408,6 +412,10 @@ const en: PageSet = {
           {
             q: "Which areas do you cover for home lessons?",
             a: "Athens and the nearby suburbs. Send us your area and we will tell you straight away whether we cover it, or which partner studio is closest to you.",
+          },
+          {
+            q: "Can home lessons be in English?",
+            a: "Yes. Regina teaches in English as well as Greek, whichever feels more natural for your child.",
           },
           {
             q: "Can siblings or friends join in?",
