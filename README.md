@@ -26,7 +26,6 @@ npm run lint
 | Μαρτυρίες γονέων | `testimonials.items` | **Δεν είναι πραγματικές κριτικές** |
 | Περιοχές εξυπηρέτησης | `faq`, `contact.details` | Επιβεβαιώστε τις πραγματικές |
 | Domain / canonical URL | `site.url` | `https://hibibloom.gr` |
-| Αποστολή φόρμας | `sections/Contact.tsx` | Δεν υπάρχει backend, βλ. παρακάτω |
 
 Το Hibi Bloom **δεν έχει δικό του χώρο**: η Ρεγγίνα Αυγουστή κάνει μαθήματα
 κατ' οίκον και σε συνεργαζόμενους χώρους. Γι' αυτό δεν υπάρχει section χώρου,
@@ -52,11 +51,11 @@ node scripts/images.mjs                          # από τον προεπιλ�
 SRC_DIR=/path/to/pngs node scripts/images.mjs
 ```
 
-### Φόρμα επικοινωνίας
+### Επικοινωνία
 
-Η φόρμα κάνει client-side validation και **προσομοιώνει** την αποστολή. Συνδέστε
-την με έναν handler (route handler, Resend, Formspree…) στο `onSubmit` του
-`src/components/sections/Contact.tsx`.
+Δεν υπάρχει φόρμα. Το section επικοινωνίας δείχνει τηλέφωνο (`tel:`), Viber
+(`viber://chat`) και email (`mailto:`) από το `contact.details`, και κάθε κλικ
+καταγράφεται στο GA4 ως `generate_lead`.
 
 ---
 
